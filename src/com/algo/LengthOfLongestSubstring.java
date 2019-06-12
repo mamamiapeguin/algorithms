@@ -39,14 +39,14 @@ public class LengthOfLongestSubstring {
                 max_no_repeat = no_repeat.size();
             }
 
-//            StdOut.println("\n");
-//            StdOut.println("max_no_repeat: " + max_no_repeat);
-//            StdOut.println("start: " + start + " end: " + end);
-//            StdOut.println("flag: " + flag);
-//            for (Object c:no_repeat) {
-//                StdOut.print(c);
-//            }
-//            StdOut.println("");
+            StdOut.println("\n");
+            StdOut.println("max_no_repeat: " + max_no_repeat);
+            StdOut.println("start: " + start + " end: " + end);
+            StdOut.println("flag: " + flag);
+            for (Object c:no_repeat) {
+                StdOut.print(c);
+            }
+            StdOut.println("");
         }
 //        for (Object c:longest_arr) {
 //            StdOut.print(c);
@@ -59,15 +59,15 @@ public class LengthOfLongestSubstring {
     public static void main(String[] args) {
         LengthOfLongestSubstring solution = new LengthOfLongestSubstring();
         int max = solution.lengthOfLongestSubstring( "pwwkew");
-        StdOut.println("max_no_repeat: " + max);
-        max = solution.lengthOfLongestSubstring( "aabaab!bb");
-        StdOut.println("max_no_repeat: " + max);
-        max = solution.lengthOfLongestSubstring( "aa");
-        StdOut.println("max_no_repeat: " + max);
-        max = solution.lengthOfLongestSubstring( "aab");
-        StdOut.println("max_no_repeat: " + max);
-        max = solution.lengthOfLongestSubstring( "bbtablud");
-        StdOut.println("max_no_repeat: " + max);
+//        StdOut.println("max_no_repeat: " + max);
+//        max = solution.lengthOfLongestSubstring( "aabaab!bb");
+//        StdOut.println("max_no_repeat: " + max);
+//        max = solution.lengthOfLongestSubstring( "aa");
+//        StdOut.println("max_no_repeat: " + max);
+//        max = solution.lengthOfLongestSubstring( "aab");
+//        StdOut.println("max_no_repeat: " + max);
+//        max = solution.lengthOfLongestSubstring( "bbtablud");
+//        StdOut.println("max_no_repeat: " + max);
         max = solution.lengthOfLongestSubstring( "qrsvbspk");
         StdOut.println("max_no_repeat: " + max);
     }
