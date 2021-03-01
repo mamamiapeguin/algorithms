@@ -34,6 +34,7 @@ public class Bag<Item> implements Iterable<Item>
 
         }
 
+        @Override
         public Item next() {
             Item item = current.item;
             current = current.next;

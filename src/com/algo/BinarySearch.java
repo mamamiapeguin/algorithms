@@ -24,23 +24,4 @@ public class BinarySearch {
         }
         return -1;
     }
-
-    public static void main(String[] args) {
-        int[] whitelist = In.readInts("./algs4-data/".concat(args[0]));
-        Arrays.sort(whitelist);
-        try {
-            File input = new File("./algs4-data/".concat(args[1]));
-            Scanner sc = new Scanner(input);
-            while (sc.hasNextLine()) {
-                Integer key = Integer.parseInt(sc.nextLine().trim());
-                if (rank(key, whitelist) == -1) {
-                    StdOut.println("miss: " + key);
-                } else {
-                    StdOut.println("hit: " + key);
-                }
-            }
-        } catch (Exception e) {
-            StdOut.println(e.getMessage());
-        }
-    }
 }
