@@ -1,22 +1,28 @@
+/*
+ * Copyright 2021 tuhu.cn All right reserved. This software is the
+ * confidential and proprietary information of tuhu.cn ("Confidential
+ * Information"). You shall not disclose such Confidential Information and shall
+ * use it only in accordance with the terms of the license agreement you entered
+ * into with Tuhu.cn
+ */
 package com.algo;
 
-public class Merge extends Sortable
-{
+/**
+ * @author argomarz
+ * @date 2021/4/811:22 上午
+ */
+public class MergeBU extends Sortable {
+
     private static Comparable[] aux;
 
     public static void sort(Comparable[] a) {
-        aux = new Comparable[a.length];
-        sort(a, 0, a.length - 1);
-    }
-
-    public static void sort(Comparable[] a, int lo, int hi) {
-        if (hi <= lo) {
-            return;
+        int N = a.length;
+        aux = new Comparable[N];
+        for (int sz = 1; sz < N; sz = sz + sz) {
+            for (int lo = 0; lo < N - sz; lo += sz + sz) {
+                merge(a, lo, lo + sz - 1, Math.min(lo + sz + sz - 1, N - 1));
+            }
         }
-        int mid = lo + (hi - lo)/2;
-        sort(a, lo, mid);
-        sort(a, mid + 1, hi);
-        merge(a, lo, mid, hi);
     }
 
     // 原地归并
@@ -24,7 +30,7 @@ public class Merge extends Sortable
         if (aux == null) {
             aux = new Comparable[hi + 1];
         }
-        int i = lo, j = mid+1;
+        int i = lo, j = mid + 1;
 
         for (int k = lo; k <= hi; k++) {
             aux[k] = a[k];
@@ -47,4 +53,5 @@ public class Merge extends Sortable
             show(a);
         }
     }
+
 }

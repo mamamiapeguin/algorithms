@@ -1,7 +1,5 @@
 package com.algo;
 
-import edu.princeton.cs.algs4.In;
-
 public class Selection extends Sortable
 {
     public static void sort(Comparable[] a) {
