@@ -3,13 +3,11 @@ package com.algo;
 import edu.princeton.cs.algs4.StdOut;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
  * @author argomarz
  * @date 2021/4/910:29 上午
  */
-public class IndexMinPQTest {
+public class Ex2_4_33 {
 
     @Test
     public void run() {
@@ -22,7 +20,8 @@ public class IndexMinPQTest {
         for (int i = 0; i < input.length(); i++) {
             indexMinPQ.insert(i, characters[i]);
         }
-        for (int i = input.length(); i > 0 ; i--) {
+        StdOut.println("+++++++++");
+        for (int i = input.length() - 1; i > 0 ; i--) {
             indexMinPQ.delete(i);
         }
     }

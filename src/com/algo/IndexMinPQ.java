@@ -1,33 +1,56 @@
 package com.algo;
 
+import edu.princeton.cs.algs4.StdOut;
+
 /**
  * 优先级队列和索引优先级队列的区别：二叉堆维护的是元素本身还是元素的索引
- * @param <Key>
+ * 索引 vs 元素 一一对应，不可变
+ * 索引在二叉堆中的位置由元素大小决定/变化
+ *
+ * @param <Items>
  */
-public class IndexMinPQ<Key extends Comparable<Key>>
-{
+public class IndexMinPQ<Items extends Comparable<Items>> {
     private int N;
-    private int[] pq; //pq是二叉堆数组，根据元素在二叉堆中的位置更新元素的索引k在pq中的位置，元素本身维护在keys[k]中
+    /**
+     * pq是索引的二叉堆数组，根据元素大小更新索引k在pq中的位置，元素本身维护在items[k]中
+     */
+    private int[] pq;
+    /**
+     * qp是pq的逆序，满足pq[qp[i]] = i，维护索引k在二叉堆数组pq中的w位置
+     */
     private int[] qp;
-    private Key[] keys; //keys是稀疏的，并非二叉堆数组
+    /**
+     * items是稀疏的，并非二叉堆数组
+     */
+    private Items[] items;
 
     public IndexMinPQ(int maxN) {
-        keys = (Key[]) new Comparable[maxN+1];
-        pq = new int[maxN+1];
-        qp = new int[maxN+1];
-        for (int i = 0; i <= maxN; i++) qp[i] = -1;
+        items = (Items[]) new Comparable[maxN];
+        pq = new int[maxN + 1];
+        qp = new int[maxN];
+        for (int i = 0; i < maxN; i++) {
+            qp[i] = -1;
+        }
     }
 
-    public void insert(int k, Key key) {
+    public void insert(int k, Items key) {
         N++;
         qp[k] = N;
-        pq[N] = k; //将索引k加入二叉堆数组末尾
-        keys[k] = key; //索引k是元素在keys中的位置，固定不变
-        swim(N); //上浮过程会将索引k更新到二叉堆中的正确位置
+        //将索引k加入二叉堆数组末尾
+        pq[N] = k;
+        //索引k是元素在keys中的位置，固定不变
+        items[k] = key;
+        //上浮过程会将索引k更新到二叉堆中的正确位置
+        swim(N);
+        show(qp);
+        show(pq);
+        show(items);
     }
 
-    public void change(int k, Key key) {
-        keys[k] = key;
+    public void change(int k, Items key) {
+        items[k] = key;
+        swim(qp[k]);
+        sink(qp[k]);
     }
 
     public boolean contains(int k) {
@@ -35,15 +58,20 @@ public class IndexMinPQ<Key extends Comparable<Key>>
     }
 
     public void delete(int k) {
-        exch(k, N--);
-        swim(k);
-        sink(k);
-        keys[k] = null;
+        int index = qp[k];
+        exch(index, N--);
+        swim(index);
+        sink(index);
+        items[k] = null;
+        pq[N + 1] = 0;
         qp[k] = -1;
+        show(qp);
+        show(pq);
+        show(items);
     }
 
-    public Key min() {
-        return keys[pq[1]];
+    public Items min() {
+        return items[pq[1]];
     }
 
     public int minIndex() {
@@ -54,8 +82,8 @@ public class IndexMinPQ<Key extends Comparable<Key>>
         int indexOfMin = pq[1];
         exch(1, N--);
         sink(1);
-        keys[pq[N+1]] = null;
-        qp[pq[N+1]] = -1;
+        items[pq[N + 1]] = null;
+        qp[pq[N + 1]] = -1;
         return indexOfMin;
     }
 
@@ -69,7 +97,7 @@ public class IndexMinPQ<Key extends Comparable<Key>>
 
     private boolean less(int i, int j) {
         //pq是元素在二叉堆里的索引
-        return keys[pq[i]].compareTo(keys[pq[j]]) < 0;
+        return items[pq[i]].compareTo(items[pq[j]]) < 0;
     }
 
     private void exch(int i, int j) {
@@ -82,19 +110,37 @@ public class IndexMinPQ<Key extends Comparable<Key>>
     }
 
     private void swim(int k) {
-        while (k > 1 && less(k/2, k)) {
-            exch(k/2, k);
-            k = k/2;
+        while (k > 1 && less(k, k/2)) {
+            exch(k / 2, k);
+            k = k / 2;
         }
     }
 
     private void sink(int k) {
-        while (2*k < N) {
-            int j = 2*k;
-            if (j < N && less(j, j+1)) j++;
-            if (!less(k, j)) break;
+        while (2 * k < N) {
+            int j = 2 * k;
+            if (j < N && less(j, j + 1)) {
+                j++;
+            }
+            if (!less(j, k)) {
+                break;
+            }
             exch(k, j);
             k = j;
         }
+    }
+
+    static void show(Comparable[] a) {
+        for (int i = 0; i < a.length; i++) {
+            StdOut.print(a[i] + " ");
+        }
+        StdOut.println();
+    }
+
+    static void show(int[] a) {
+        for (int i = 0; i < a.length; i++) {
+            StdOut.print(a[i] + " ");
+        }
+        StdOut.println();
     }
 }
