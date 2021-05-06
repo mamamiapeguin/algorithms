@@ -3,7 +3,9 @@ package com.algo;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Queue<Item>
+import java.util.Iterator;
+
+public class Queue<Item> implements Iterable<Item>
 {
     public static void main(String[] args) {
         Queue<String> q = new Queue<String>();
@@ -21,6 +23,25 @@ public class Queue<Item>
     private Node first;
     private Node last;
     private int N;
+
+    @Override
+    public Iterator<Item> iterator() {
+        return new Iterator<Item>() {
+
+            private Node current = first;
+
+            @Override
+            public boolean hasNext() {
+                return null != current.next;
+            }
+
+            @Override
+            public Item next() {
+                current = current.next;
+                return current.item;
+            }
+        };
+    }
 
     private class Node {
         Item item;
