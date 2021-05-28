@@ -54,7 +54,7 @@ public class MSD {
      */
     private static void sort(String[] a, int lo, int hi, int d) {
         if (hi <= lo + M) {
-//            Insertion.sort(a, lo, hi, d);
+            Insertion.sort(a, lo, hi, d);
             return;
         }
 
